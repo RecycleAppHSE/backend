@@ -142,6 +142,7 @@ HTTP/1.1 200 OK
       "id": 12,
       "title": "City pollution ranking",
       "conent": "The polluted city is ..."
+      "source": "https://www.forbes.ru/newsroom/obshchestvo/393811-eksperty-nazvali-samye-zagryaznennye-goroda-rossii"
     }
   ]
 }
@@ -173,33 +174,6 @@ HTTP/1.1 200 OK
 <details><summary>ADVICES</summary>
 <p>
   
-## Get advices
-
-Request example:
-
-```
-GET /news?page=1&size=10
-
-USER_ID: 2123
-```
-
-Response example:
-
-```
-HTTP/1.1 200 OK
-
-{
-  "news": [
-    {
-      "id": 12,
-      "title": "City pollution ranking",
-      "conent": "The polluted city is ..."
-      "source": "https://www.forbes.ru/newsroom/obshchestvo/393811-eksperty-nazvali-samye-zagryaznennye-goroda-rossii"
-    }
-  ]
-}
-```
-
 
 </p>
 </details>
