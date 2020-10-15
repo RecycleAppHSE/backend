@@ -1,5 +1,52 @@
 Client communicate with server by sending HTTP 1.1 requests.
 
+
+<details><summary>MAP</summary>
+<p>
+
+
+## Collection points near
+
+Request example:
+
+```
+GET /near_me?page=1&size=10&latitude=38.8951&longitude=-77.0364
+
+USER_ID: 2123
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+
+{
+  "collection_points": 
+     [
+      {
+        "name": "Pokrovsky bulvar 2",
+        "phone_number": "+74994001041",
+        "web_site": "https://www.hse.ru/"
+        "recycle": ["metal", "glass", "plastic", "paper"]
+      }
+     ]
+}
+```
+
+
+</p>
+</details>
+
+<details><summary>NEWS</summary>
+<p>
+</p>
+</details>
+
+<details><summary>ADVICES</summary>
+<p>
+</p>
+</details>
+
 <details><summary>USER PROFILE</summary>
 <p>
 
@@ -42,52 +89,6 @@ Response example:
 ```
 HTTP/1.1 200 OK
 ```
-
-</p>
-</details>
-
-<details><summary>NEWS</summary>
-<p>
-</p>
-</details>
-
-<details><summary>ADVICES</summary>
-<p>
-</p>
-</details>
-
-<details><summary>MAP</summary>
-<p>
-
-
-## Collection points near
-
-Request example:
-
-```
-GET /near_me?page=1&size=10&latitude=38.8951&longitude=-77.0364
-
-USER_ID: 2123
-```
-
-Response example:
-
-```
-HTTP/1.1 200 OK
-
-{
-  "collection_points": 
-     [
-      {
-        "name": "Pokrovsky bulvar 2",
-        "phone_number": "+74994001041",
-        "web_site": "https://www.hse.ru/"
-        "recycle": ["metal", "glass", "plastic", "paper"]
-      }
-     ]
-}
-```
-
 
 </p>
 </details>
