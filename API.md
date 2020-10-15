@@ -27,7 +27,10 @@ HTTP/1.1 200 OK
         "name": "Pokrovsky bulvar 2",
         "phone_number": "+74994001041",
         "web_site": "https://www.hse.ru/"
-        "recycle": ["metal", "glass", "plastic", "paper"]
+        "recycle": ["metal", "glass", "plastic", "paper"],
+        "latitude": 38.8951,
+        "longitude": -77.0364,
+        "works":  true
       }
      ]
 }
@@ -113,10 +116,18 @@ HTTP/1.1 200 OK
 
 ## Get me
 
+Request example:
+
 ```
 GET /me
 
 USER_ID: 2123
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
 
 {
   "name" : "John Smith",
@@ -129,11 +140,44 @@ USER_ID: 2123
 }
 ```
 
+## Get correction by id
+
+Request example:
+
+```
+GET /correction/5
+
+USER_ID: 2123
+```
+
 Response example:
 
 ```
 HTTP/1.1 200 OK
+
+{
+  "from": {
+      "name": "Pokrovsky bulvar 2",
+      "phone_number": "+74994001041",
+      "web_site": "https://www.hse.ru/"
+      "recycle": ["metal", "glass", "plastic", "paper"],
+      "latitude": 38.8951,
+      "longitude": -77.0364,
+      "works":  true
+  },
+  "to": {
+      "name": "Pokrovsky bulvar 2",
+      "phone_number": "+74994001041",
+      "web_site": "https://www.hse.ru/"
+      "recycle": ["metal", "glass", "plastic", "paper"],
+      "latitude": 38.8951,
+      "longitude": -77.0364,
+      "works":  false
+  }
+}
 ```
+
+
 
 </p>
 </details>
