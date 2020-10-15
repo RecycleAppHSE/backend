@@ -1,5 +1,9 @@
 Client communicate with server by sending HTTP 1.1 requests.
 
+<details><summary>CLICK ME</summary>
+<p>
+
+
 ### New user creation endpoint
 
 Request example:
@@ -19,6 +23,10 @@ HTTP/1.1 200 OK
 ```
 
 The received `user_id` is expected to be used for subsequent requests as a value of "USER_ID" header.
+
+
+</p>
+</details>
 
 ### Collection points near
 
