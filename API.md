@@ -121,6 +121,11 @@ USER_ID: 2123
 {
   "name" : "John Smith",
   "favourite_news_ids" : [1, 56, 5544]
+  "collection_points_corrections_ids": 
+    {
+      "approved": [5,6,122],
+      "not-approved": [1,7,12]
+    }
 }
 ```
 
