@@ -36,6 +36,83 @@ HTTP/1.1 200 OK
 }
 ```
 
+## Suggest correction
+
+Request example:
+
+```
+POST /correction/suggest
+
+USER_ID: 2123
+
+{
+  "from": {
+      "name": "Pokrovsky bulvar 2",
+      "phone_number": "+74994001041",
+      "web_site": "https://www.hse.ru/"
+      "recycle": ["metal", "glass", "plastic", "paper"],
+      "latitude": 38.8951,
+      "longitude": -77.0364,
+      "works":  true
+  },
+  "to": {
+      "name": "Pokrovsky bulvar 2",
+      "phone_number": "+74994001041",
+      "web_site": "https://www.hse.ru/"
+      "recycle": ["metal", "glass", "plastic", "paper"],
+      "latitude": 38.8951,
+      "longitude": -77.0364,
+      "works":  false
+  }
+}
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+
+{
+  "correction_id": 5
+}
+```
+
+## Get correction by id
+
+Request example:
+
+```
+GET /correction/5
+
+USER_ID: 2123
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+
+{
+  "from": {
+      "name": "Pokrovsky bulvar 2",
+      "phone_number": "+74994001041",
+      "web_site": "https://www.hse.ru/"
+      "recycle": ["metal", "glass", "plastic", "paper"],
+      "latitude": 38.8951,
+      "longitude": -77.0364,
+      "works":  true
+  },
+  "to": {
+      "name": "Pokrovsky bulvar 2",
+      "phone_number": "+74994001041",
+      "web_site": "https://www.hse.ru/"
+      "recycle": ["metal", "glass", "plastic", "paper"],
+      "latitude": 38.8951,
+      "longitude": -77.0364,
+      "works":  false
+  }
+}
+```
 
 </p>
 </details>
@@ -137,43 +214,6 @@ HTTP/1.1 200 OK
       "approved": [5,6,122],
       "not-approved": [1,7,12]
     }
-}
-```
-
-## Get correction by id
-
-Request example:
-
-```
-GET /correction/5
-
-USER_ID: 2123
-```
-
-Response example:
-
-```
-HTTP/1.1 200 OK
-
-{
-  "from": {
-      "name": "Pokrovsky bulvar 2",
-      "phone_number": "+74994001041",
-      "web_site": "https://www.hse.ru/"
-      "recycle": ["metal", "glass", "plastic", "paper"],
-      "latitude": 38.8951,
-      "longitude": -77.0364,
-      "works":  true
-  },
-  "to": {
-      "name": "Pokrovsky bulvar 2",
-      "phone_number": "+74994001041",
-      "web_site": "https://www.hse.ru/"
-      "recycle": ["metal", "glass", "plastic", "paper"],
-      "latitude": 38.8951,
-      "longitude": -77.0364,
-      "works":  false
-  }
 }
 ```
 
