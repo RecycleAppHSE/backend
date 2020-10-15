@@ -41,10 +41,6 @@ Response example:
 
 ```
 HTTP/1.1 200 OK
-
-{
-  "user_id": 2123
-}
 ```
 
 </p>
