@@ -90,5 +90,45 @@ Response example:
 HTTP/1.1 200 OK
 ```
 
+
+## Add news to favourite
+
+Request example:
+
+```
+POST /add_to_favorite
+
+USER_ID: 2123
+
+{
+  "news_id" : 56
+}
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+```
+
+## Get me
+
+```
+GET /me
+
+USER_ID: 2123
+
+{
+  "name" : "John Smith",
+  "favourite_news_ids" : [1, 56, 5544]
+}
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+```
+
 </p>
 </details>
