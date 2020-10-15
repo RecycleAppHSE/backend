@@ -119,11 +119,88 @@ HTTP/1.1 200 OK
 
 <details><summary>NEWS</summary>
 <p>
+
+
+## Get news
+
+Request example:
+
+```
+GET /news?page=1&size=10
+
+USER_ID: 2123
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+
+{
+  "news": [
+    {
+      "id": 12,
+      "title": "City pollution ranking",
+      "conent": "The polluted city is ..."
+    }
+  ]
+}
+```
+
+## Add news to favourite
+
+Request example:
+
+```
+POST /news/12/add_to_favourites
+
+USER_ID: 2123
+
+{
+  "news_id" : 56
+}
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+```
+
 </p>
 </details>
 
 <details><summary>ADVICES</summary>
 <p>
+  
+## Get advices
+
+Request example:
+
+```
+GET /news?page=1&size=10
+
+USER_ID: 2123
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+
+{
+  "news": [
+    {
+      "id": 12,
+      "title": "City pollution ranking",
+      "conent": "The polluted city is ..."
+      "source": "https://www.forbes.ru/newsroom/obshchestvo/393811-eksperty-nazvali-samye-zagryaznennye-goroda-rossii"
+    }
+  ]
+}
+```
+
+
 </p>
 </details>
 
@@ -161,27 +238,6 @@ USER_ID: 2123
 
 {
   "change_to" : "John Smith"
-}
-```
-
-Response example:
-
-```
-HTTP/1.1 200 OK
-```
-
-
-## Add news to favourite
-
-Request example:
-
-```
-POST /add_to_favorite
-
-USER_ID: 2123
-
-{
-  "news_id" : 56
 }
 ```
 
