@@ -1,6 +1,6 @@
 Client communicate with server by sending HTTP 1.1 requests.
 
-<details><summary>CLICK ME</summary>
+<details><summary>USER PROFILE</summary>
 <p>
 
 
@@ -27,6 +27,10 @@ The received `user_id` is expected to be used for subsequent requests as a value
 
 </p>
 </details>
+
+<details><summary>MAP</summary>
+<p>
+
 
 ### Collection points near
 
@@ -57,3 +61,6 @@ HTTP/1.1 200 OK
 }
 ```
 
+
+</p>
+</details>
