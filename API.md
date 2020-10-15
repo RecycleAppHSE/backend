@@ -25,7 +25,7 @@ The received `user_id` is expected to be used for subsequent requests as a value
 Request example:
 
 ```
-GET /near_me?page=1&size=10
+GET /near_me?page=1&size=10&latitude=38.8951&longitude=-77.0364
 
 ...
 USER_ID: 2123
@@ -43,6 +43,7 @@ HTTP/1.1 200 OK
         "name": "Pokrovsky bulvar 2",
         "phone_number": "+74994001041",
         "web_site": "https://www.hse.ru/"
+        "recycle": ["metal", "glass", "plastic", "paper"]
       }
      ]
 }
