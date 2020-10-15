@@ -3,8 +3,7 @@ Client communicate with server by sending HTTP 1.1 requests.
 <details><summary>USER PROFILE</summary>
 <p>
 
-
-### New user creation endpoint
+## New user creation endpoint
 
 Request example:
 
@@ -24,6 +23,29 @@ HTTP/1.1 200 OK
 
 The received `user_id` is expected to be used for subsequent requests as a value of "USER_ID" header.
 
+## Change name
+
+Request example:
+
+```
+POST /change_name
+
+USER_ID: 2123
+
+{
+  "change_to" : "John Smith"
+}
+```
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+
+{
+  "user_id": 2123
+}
+```
 
 </p>
 </details>
@@ -32,14 +54,13 @@ The received `user_id` is expected to be used for subsequent requests as a value
 <p>
 
 
-### Collection points near
+## Collection points near
 
 Request example:
 
 ```
 GET /near_me?page=1&size=10&latitude=38.8951&longitude=-77.0364
 
-...
 USER_ID: 2123
 ```
 
