@@ -46,6 +46,16 @@ HTTP/1.1 200 OK
 </p>
 </details>
 
+<details><summary>NEWS</summary>
+<p>
+</p>
+</details>
+
+<details><summary>ADVICES</summary>
+<p>
+</p>
+</details>
+
 <details><summary>MAP</summary>
 <p>
 
