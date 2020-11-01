@@ -28,4 +28,4 @@ jobs:
             docker pull sammers/rcycle-app:latest
             docker stop rcapp
             docker rm -f rcapp
-            docker run --name rcapp -d -p8080:8080 sammers/rcycle-app:latest
+            docker run -e DB_URI="${{ secrets.DB_URI }}" --name rcapp -d -p8080:8080 sammers/rcycle-app:latest

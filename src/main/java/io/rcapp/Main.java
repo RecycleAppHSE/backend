@@ -4,6 +4,7 @@ import io.reactivex.plugins.RxJavaPlugins;
 import io.vertx.reactivex.core.RxHelper;
 import io.vertx.reactivex.core.Vertx;
 import io.vertx.reactivex.ext.web.Router;
+import io.vertx.reactivex.pgclient.PgPool;
 
 public class Main {
 
@@ -17,8 +18,13 @@ public class Main {
 
   private static void startServer(Vertx vertx, int port) {
     final Router router = Router.router(vertx);
-    final API api = new API();
-    final DB db = new DB();
+    final String uri = System.getenv("DB_URI");
+    final PgPool pool = PgPool.pool(uri);
+    final Integer integer =
+        pool.query("SELECT 1").rxExecute().blockingGet().iterator().next().getInteger(0);
+    System.out.println(integer);
+    final DB db = new DB(pool);
+    final API api = new API(db);
     router
         .get("/")
         .handler(

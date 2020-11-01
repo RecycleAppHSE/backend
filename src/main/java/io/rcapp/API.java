@@ -6,6 +6,12 @@ import io.vertx.reactivex.ext.web.RoutingContext;
 
 public class API {
 
+  private final DB db;
+
+  public API(DB db) {
+    this.db = db;
+  }
+
   public void newUser(RoutingContext routingContext) {}
 
   public Single<JsonObject> changeName(RoutingContext routingContext, Long usedId) {
