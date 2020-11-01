@@ -1,5 +1,7 @@
 ![Code style verification](https://github.com/RecycleAppHSE/backend/workflows/Code%20style%20verification/badge.svg?branch=master)
+
 ![Release](https://github.com/RecycleAppHSE/backend/workflows/Release/badge.svg)
+
 ![Build](https://github.com/RecycleAppHSE/backend/workflows/Build/badge.svg?branch=master)
 
 # How to run it?
