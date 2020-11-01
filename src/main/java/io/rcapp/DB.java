@@ -11,7 +11,7 @@ public class DB {
     this.pool = pool;
   }
 
-  public Single<Long> newUser(){
+  public Single<Long> newUser() {
     return pool.query("insert into rc_user(name, photo_url) values (null, null) returning id")
         .rxExecute()
         .map(rows -> rows.iterator().next().getLong(0));
