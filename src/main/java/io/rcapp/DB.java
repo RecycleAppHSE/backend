@@ -1,5 +1,3 @@
 package io.rcapp;
 
-public class DB {
-
-}
+public class DB {}
