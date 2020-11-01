@@ -26,7 +26,7 @@ public class Main {
               req.response().putHeader("content-type", "text/plain").end("Hello world!");
             });
     // USER PROFILE
-    router.get("/new_user").handler(new Auth(api::newUser));
+    router.get("/new_user").handler(api::newUser);
     router.post("/change_name").handler(new Auth(api::changeName));
     router.post("/me").handler(new Auth(api::me));
     // ADVICES
