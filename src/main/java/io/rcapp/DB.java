@@ -1,5 +1,7 @@
 package io.rcapp;
 
+import io.rcapp.domain.Corrections;
+import io.rcapp.domain.User;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.vertx.reactivex.pgclient.PgPool;

@@ -1,4 +1,4 @@
-package io.rcapp;
+package io.rcapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
