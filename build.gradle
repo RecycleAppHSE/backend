@@ -7,9 +7,17 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    vtx_version = "3.9.+"
+    junit_version = "5.+"
+}
+
 dependencies {
-    compile 'io.vertx:vertx-core:3.9.3'
-    testImplementation 'junit:junit:4.12'
+    compile "io.vertx:vertx-core:${vtx_version}"
+    compile "io.vertx:vertx-web:${vtx_version}"
+    compile "io.vertx:vertx-rx-java2:${vtx_version}"
+    testCompile "org.junit.jupiter:junit-jupiter-api:${junit_version}"
+    testCompile "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
 }
 
 mainClassName = 'io.rcapp.Main'
