@@ -3,12 +3,13 @@
  */
 package io.rcapp;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.junit.jupiter.api.Test;
+
 public class AppTest {
-    @Test
-    public void twoPlusTwoIsFour() {
-        assertEquals(2 + 2, 4);
-    }
+  @Test
+  public void twoPlusTwoIsFour() {
+    assertEquals(2 + 2, 4);
+  }
 }
