@@ -13,4 +13,4 @@ The project uses Google Code Style. Run `./gradlew goJF` for automatic formattin
 
 # API specification
 
-API specification can be found at `API.md` file.
+API specification can be found at [`API.md`](./API.md) file.
