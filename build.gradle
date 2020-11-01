@@ -8,7 +8,7 @@ googleJavaFormat {
     source 'src/main'
     source 'src/test'
     include '**/*.java'
-    exclude '**/*User.java'
+    exclude '**/domain/*.java'
 }
 
 compileJava {
