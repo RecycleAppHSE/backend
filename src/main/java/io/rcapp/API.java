@@ -12,7 +12,10 @@ public class API {
     this.db = db;
   }
 
-  public void newUser(RoutingContext routingContext) {}
+  public void newUser(RoutingContext rc) {
+    db.newUser()
+        .subscribe(id -> rc.response().end(new JsonObject().put("user_id", id).encodePrettily()));
+  }
 
   public Single<JsonObject> changeName(RoutingContext routingContext, Long usedId) {
     return Single.just(new JsonObject());
