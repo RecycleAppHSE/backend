@@ -219,6 +219,8 @@ Response example:
 
 ```
 HTTP/1.1 200 OK
+
+{}
 ```
 
 ## Get me

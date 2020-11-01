@@ -18,7 +18,9 @@ public class API {
   }
 
   public Single<JsonObject> changeName(RoutingContext routingContext, Long usedId) {
-    return Single.just(new JsonObject());
+    final JsonObject body = routingContext.getBodyAsJson();
+    final String change = body.getString("change_to");
+    return db.changeName(change, usedId).andThen(Single.just(new JsonObject()));
   }
 
   public Single<JsonObject> me(RoutingContext routingContext, Long usedId) {
