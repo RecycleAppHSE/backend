@@ -20,9 +20,6 @@ public class Main {
     final Router router = Router.router(vertx);
     final String uri = System.getenv("DB_URI");
     final PgPool pool = PgPool.pool(uri);
-    final Integer integer =
-        pool.query("SELECT 1").rxExecute().blockingGet().iterator().next().getInteger(0);
-    System.out.println(integer);
     final DB db = new DB(pool);
     final API api = new API(db);
     router
