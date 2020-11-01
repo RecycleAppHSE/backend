@@ -16,7 +16,9 @@ ext {
 dependencies {
     compile "io.vertx:vertx-core:${vtx_version}"
     compile "io.vertx:vertx-web:${vtx_version}"
+    compile "io.vertx:vertx-pg-client:${vtx_version}"
     compile "io.vertx:vertx-rx-java2:${vtx_version}"
+    compile "com.google.guava:guava:30.0-jre"
     testCompile "org.junit.jupiter:junit-jupiter-api:${junit_version}"
     testCompile "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
 }
