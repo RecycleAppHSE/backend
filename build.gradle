@@ -4,6 +4,17 @@ plugins {
     id 'com.github.sherter.google-java-format' version '0.8'
 }
 
+googleJavaFormat {
+    source 'src/main'
+    source 'src/test'
+    include '**/*.java'
+    exclude '**/*User.java'
+}
+
+compileJava {
+    options.compilerArgs << '--enable-preview'
+}
+
 repositories {
     mavenCentral()
 }

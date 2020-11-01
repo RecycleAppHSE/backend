@@ -245,7 +245,7 @@ HTTP/1.1 200 OK
   "collection_points_corrections_ids": 
     {
       "approved": [5,6,122],
-      "not-approved": [1,7,12]
+      "not_approved": [1,7,12]
     }
 }
 ```

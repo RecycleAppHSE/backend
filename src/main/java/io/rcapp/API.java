@@ -24,6 +24,6 @@ public class API {
   }
 
   public Single<JsonObject> me(RoutingContext routingContext, Long usedId) {
-    return Single.just(new JsonObject());
+    return db.me(usedId).map(JsonObject::mapFrom);
   }
 }
