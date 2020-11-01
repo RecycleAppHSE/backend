@@ -26,7 +26,7 @@ HTTP/1.1 200 OK
       {
         "name": "Pokrovsky bulvar 2",
         "phone_number": "+74994001041",
-        "web_site": "https://www.hse.ru/"
+        "web_site": "https://www.hse.ru/",
         "recycle": ["metal", "glass", "plastic", "paper"],
         "latitude": 38.8951,
         "longitude": -77.0364,
@@ -141,7 +141,7 @@ HTTP/1.1 200 OK
     {
       "id": 12,
       "title": "City pollution ranking",
-      "conent": "The polluted city is ..."
+      "conent": "The polluted city is ...",
       "source": "https://www.forbes.ru/newsroom/obshchestvo/393811-eksperty-nazvali-samye-zagryaznennye-goroda-rossii"
     }
   ]
@@ -238,7 +238,8 @@ HTTP/1.1 200 OK
 
 {
   "name" : "John Smith",
-  "favourite_news_ids" : [1, 56, 5544]
+  "photo_url" : "shorturl.at/ehsJ3",
+  "favourite_news_ids" : [1, 56, 5544],
   "collection_points_corrections_ids": 
     {
       "approved": [5,6,122],
