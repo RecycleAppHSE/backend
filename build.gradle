@@ -25,8 +25,12 @@ ext {
 }
 
 dependencies {
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.26'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: "1.2.3"
+    compile "io.vertx:vertx-core:${vtx_version}"
     compile "io.vertx:vertx-core:${vtx_version}"
     compile "io.vertx:vertx-web:${vtx_version}"
+    compile "io.vertx:vertx-web-client:${vtx_version}"
     compile "io.vertx:vertx-pg-client:${vtx_version}"
     compile "io.vertx:vertx-rx-java2:${vtx_version}"
     compile "com.google.guava:guava:30.0-jre"
@@ -42,4 +46,15 @@ jar {
         attributes 'Main-Class': mainClassName
     }
     archiveBaseName = "backend"
+}
+
+task RecycleMapRuImport(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'RecycleMapRuImport',
+                'Implementation-Version': "1.0",
+                'Main-Class': 'io.rcapp.imprt.Importer'
+    }
+    archiveBaseName = "importer"
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
