@@ -54,7 +54,7 @@ USER_ID: 2123
 
 {
     "id": 21
-    "name": "Pokrovsky bulvar 2",
+    "name": "Контейнер ГК "Тайгер-Сибирь",
     "phone_number": "+74994001041",
     "web_site": "https://www.hse.ru/",
     "recycle": ["metal", "glass", "plastic", "paper"],
