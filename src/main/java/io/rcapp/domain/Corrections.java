@@ -5,5 +5,5 @@ import java.util.List;
 
 public record Corrections(
     @JsonProperty("approved") List<Long> approved,
-    @JsonProperty("not_approved") List<Long> notApproved)
-{ }
+    @JsonProperty("not_approved") List<Long> notApproved
+) { }
