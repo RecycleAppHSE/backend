@@ -10,7 +10,7 @@ Client communicate with server by sending HTTP 1.1 requests.
 Request example:
 
 ```
-GET /near_me?page=1&size=10&latitude=38.8951&longitude=-77.0364
+GET /near_me
 
 USER_ID: 2123
 ```
@@ -30,11 +30,17 @@ HTTP/1.1 200 OK
         "recycle": ["metal", "glass", "plastic", "paper"],
         "latitude": 38.8951,
         "longitude": -77.0364,
-        "works":  true
+        "works":  "broken" | "would_not_work" | "works_fine",
+        "shedule":{
+            "from": "09:00",
+            "to": "17:00"
+         } 
       }
      ]
 }
 ```
+
+`shedule` is null when schedule is not specified.
 
 ## Suggest correction
 
