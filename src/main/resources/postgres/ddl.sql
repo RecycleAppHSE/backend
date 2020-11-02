@@ -1,3 +1,4 @@
+create database rcapp;
 create table rc_user
 (
     id        serial primary key,
@@ -5,6 +6,7 @@ create table rc_user
     photo_url text
 );
 
+create extension postgis;
 create table collection_point
 (
     id           serial primary key,

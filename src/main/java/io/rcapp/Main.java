@@ -6,15 +6,19 @@ import io.vertx.reactivex.core.Vertx;
 import io.vertx.reactivex.ext.web.Router;
 import io.vertx.reactivex.ext.web.handler.BodyHandler;
 import io.vertx.reactivex.pgclient.PgPool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
+
+  private static final Logger log = LoggerFactory.getLogger(Main.class);
 
   public static void main(String[] args) {
     final Vertx vertx = Vertx.vertx();
     final var port = 8080;
     useVertxSchedulers(vertx);
     startServer(vertx, port);
-    System.out.println("Started at port 8080");
+    log.info("Started at port {}", port);
   }
 
   private static void startServer(Vertx vertx, int port) {
