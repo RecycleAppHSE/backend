@@ -10,7 +10,7 @@ Client communicate with server by sending HTTP 1.1 requests.
 Request example:
 
 ```
-GET /near_me
+GET /point/:pointId
 
 USER_ID: 2123
 ```
@@ -24,6 +24,7 @@ HTTP/1.1 200 OK
   "collection_points": 
      [
       {
+        "id": 
         "name": "Pokrovsky bulvar 2",
         "phone_number": "+74994001041",
         "web_site": "https://www.hse.ru/",
@@ -39,8 +40,8 @@ HTTP/1.1 200 OK
      ]
 }
 ```
-
-`shedule` is null when schedule is not specified.
+* if `pointId` is not specified, all is returned.
+* `shedule` is null when schedule is not specified.
 
 ## Suggest correction
 
