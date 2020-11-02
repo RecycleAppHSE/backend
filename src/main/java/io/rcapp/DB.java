@@ -85,7 +85,6 @@ public class DB {
   }
 
   private static Point rowToPoint(Row row) {
-    final String[] schedule = row.getString("schedule").split("-");
     return new Point(
         row.getLong("id"),
         row.getString("name"),
@@ -96,12 +95,22 @@ public class DB {
         row.getDouble("longitude"),
         row.getString("works"),
         row.getLocalDateTime("last_updated").toEpochSecond(ZoneOffset.UTC),
-        new Schedule(schedule[0], schedule[1]),
+        rowToSchedule(row),
         row.getLong("corrections_count")
     );
   }
 
-  private static Set<String> rowToRecycleList(Row row){
+  private static Schedule rowToSchedule(Row row) {
+    final String str = row.getString("schedule");
+    if(str == null) {
+      return new Schedule(null, null);
+    } else {
+      final String[] split = str.split("-");
+      return new Schedule(split[0], split[1]);
+    }
+  }
+
+  private static Set<String> rowToRecycleList(Row row) {
     return Set.of(
         "plastic",
         "glass",
