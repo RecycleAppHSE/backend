@@ -7,7 +7,7 @@ on:
     # every day at 1am
     - cron: '0 1 * * *'
 jobs:
-  build:
+  import:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code
@@ -20,4 +20,4 @@ jobs:
         run: ./gradlew clean build RecycleMapRuImport
       - name: Perform import
         run: |
-          java --enable-preview -jar build/libs/importer.jar
+          DB_URI="${{ secrets.DB_URI }}" java --enable-preview -jar build/libs/importer.jar

@@ -19,5 +19,6 @@ public class Importer {
     final List<JsonObject> rcmap =
         new RecycleMapRu(WebClient.create(vertx)).download().toList().blockingGet();
     log.info("dataset size: {}", rcmap.size());
+    System.exit(0);
   }
 }
