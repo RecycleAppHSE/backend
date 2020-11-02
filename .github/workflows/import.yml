@@ -1,8 +1,5 @@
 name: Daily dataset update
 on:
-  push:
-    branches:
-      - master
   schedule:
     # every day at 1am
     - cron: '0 1 * * *'
