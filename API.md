@@ -31,7 +31,7 @@ HTTP/1.1 200 OK
     "longitude": -77.0364,
     "works":  "broken" | "would_not_work" | "works_fine",
     "last_updated": 1604343073
-    "shedule":{
+    "schedule":{
         "from": "09:00",
         "to": "17:00"
      },
