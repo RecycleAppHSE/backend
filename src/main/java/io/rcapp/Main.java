@@ -41,6 +41,7 @@ public class Main {
     // ADVICES
     // NEWS
     // MAP
+    router.get("/point").handler(new Auth(api::allPoints));
     vertx.createHttpServer().requestHandler(router).listen(port);
   }
 

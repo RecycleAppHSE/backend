@@ -1,6 +1,7 @@
 package io.rcapp;
 
 import io.reactivex.Single;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.ext.web.RoutingContext;
 
@@ -25,5 +26,17 @@ public class API {
 
   public Single<JsonObject> me(RoutingContext routingContext, Long usedId) {
     return db.me(usedId).map(JsonObject::mapFrom);
+  }
+
+  public Single<JsonObject> allPoints(RoutingContext routingContext, Long userId) {
+    return db.allPoints()
+        .map(JsonObject::mapFrom)
+        .toList()
+        .map(
+            points -> {
+              final JsonArray arr = new JsonArray();
+              points.forEach(arr::add);
+              return new JsonObject().put("points", arr);
+            });
   }
 }

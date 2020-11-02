@@ -20,24 +20,26 @@ Response example:
 ```
 HTTP/1.1 200 OK
 
-[
-  {
-    "id": 21
-    "name": "Pokrovsky bulvar 2",
-    "phone_number": "+74994001041",
-    "web_site": "https://www.hse.ru/",
-    "recycle": ["metal", "glass", "plastic", "paper"],
-    "latitude": 38.8951,
-    "longitude": -77.0364,
-    "works":  "broken" | "would_not_work" | "works_fine",
-    "last_updated": 1604343073
-    "schedule":{
-        "from": "09:00",
-        "to": "17:00"
-     },
-    "corrections_count": 2 
-  }
-]
+{
+    "points": [
+    {
+      "id": 21
+      "name": "Pokrovsky bulvar 2",
+      "phone_number": "+74994001041",
+      "web_site": "https://www.hse.ru/",
+      "recycle": ["metal", "glass", "plastic", "paper"],
+      "latitude": 38.8951,
+      "longitude": -77.0364,
+      "works":  "broken" | "would_not_work" | "works_fine",
+      "last_updated": 1604343073
+      "schedule":{
+          "from": "09:00",
+          "to": "17:00"
+       },
+      "corrections_count": 2 
+    }
+  ] 
+}
 
 ```
 * if `pointId` is not specified, all is returned.
