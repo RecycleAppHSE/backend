@@ -24,7 +24,7 @@ HTTP/1.1 200 OK
   "collection_points": 
      [
       {
-        "id": 
+        "id": 21
         "name": "Pokrovsky bulvar 2",
         "phone_number": "+74994001041",
         "web_site": "https://www.hse.ru/",
@@ -32,10 +32,12 @@ HTTP/1.1 200 OK
         "latitude": 38.8951,
         "longitude": -77.0364,
         "works":  "broken" | "would_not_work" | "works_fine",
+        "last_updated": 1604343073
         "shedule":{
             "from": "09:00",
             "to": "17:00"
-         } 
+         },
+        "corrections_count": 2 
       }
      ]
 }
@@ -53,24 +55,20 @@ POST /correction/suggest
 USER_ID: 2123
 
 {
-  "from": {
-      "name": "Pokrovsky bulvar 2",
-      "phone_number": "+74994001041",
-      "web_site": "https://www.hse.ru/"
-      "recycle": ["metal", "glass", "plastic", "paper"],
-      "latitude": 38.8951,
-      "longitude": -77.0364,
-      "works":  true
-  },
-  "to": {
-      "name": "Pokrovsky bulvar 2",
-      "phone_number": "+74994001041",
-      "web_site": "https://www.hse.ru/"
-      "recycle": ["metal", "glass", "plastic", "paper"],
-      "latitude": 38.8951,
-      "longitude": -77.0364,
-      "works":  false
-  }
+    "id": 21
+    "name": "Pokrovsky bulvar 2",
+    "phone_number": "+74994001041",
+    "web_site": "https://www.hse.ru/",
+    "recycle": ["metal", "glass", "plastic", "paper"],
+    "latitude": 38.8951,
+    "longitude": -77.0364,
+    "works": "works_fine",
+    "last_updated": 1604343073
+    "shedule":{
+        "from": "09:00",
+        "to": "17:00"
+     },
+    "corrections_count": 2 
 }
 ```
 
@@ -101,22 +99,36 @@ HTTP/1.1 200 OK
 
 {
   "from": {
-      "name": "Pokrovsky bulvar 2",
-      "phone_number": "+74994001041",
-      "web_site": "https://www.hse.ru/"
-      "recycle": ["metal", "glass", "plastic", "paper"],
-      "latitude": 38.8951,
-      "longitude": -77.0364,
-      "works":  true
+    "id": 21
+    "name": "Pokrovsky bulvar 2",
+    "phone_number": "+74994001041",
+    "web_site": "https://www.hse.ru/",
+    "recycle": ["metal", "glass", "plastic", "paper"],
+    "latitude": 38.8951,
+    "longitude": -77.0364,
+    "works": "broken",
+    "last_updated": 1604343073
+    "shedule":{
+        "from": "09:00",
+        "to": "17:00"
+     },
+    "corrections_count": 2 
   },
   "to": {
-      "name": "Pokrovsky bulvar 2",
-      "phone_number": "+74994001041",
-      "web_site": "https://www.hse.ru/"
-      "recycle": ["metal", "glass", "plastic", "paper"],
-      "latitude": 38.8951,
-      "longitude": -77.0364,
-      "works":  false
+    "id": 21
+    "name": "Pokrovsky bulvar 2",
+    "phone_number": "+74994001041",
+    "web_site": "https://www.hse.ru/",
+    "recycle": ["metal", "glass", "plastic", "paper"],
+    "latitude": 38.8951,
+    "longitude": -77.0364,
+    "works": "works_fine",
+    "last_updated": 1604343073
+    "shedule":{
+        "from": "09:00",
+        "to": "17:00"
+     },
+    "corrections_count": 2 
   }
 }
 ```
