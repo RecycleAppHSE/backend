@@ -44,7 +44,8 @@ public class Main {
     // MAP
     router.get("/point").handler(new Auth(api::allPoints));
     vertx
-        .createHttpServer(new HttpServerOptions().setCompressionSupported(true))
+        .createHttpServer(
+            new HttpServerOptions().setCompressionSupported(true).setCompressionLevel(9))
         .requestHandler(router)
         .listen(port);
   }
