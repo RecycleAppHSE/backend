@@ -1,6 +1,7 @@
 package io.rcapp;
 
 import io.reactivex.plugins.RxJavaPlugins;
+import io.vertx.core.http.HttpServerOptions;
 import io.vertx.reactivex.core.RxHelper;
 import io.vertx.reactivex.core.Vertx;
 import io.vertx.reactivex.ext.web.Router;
@@ -42,7 +43,10 @@ public class Main {
     // NEWS
     // MAP
     router.get("/point").handler(new Auth(api::allPoints));
-    vertx.createHttpServer().requestHandler(router).listen(port);
+    vertx
+        .createHttpServer(new HttpServerOptions().setCompressionSupported(true))
+        .requestHandler(router)
+        .listen(port);
   }
 
   public static void useVertxSchedulers(Vertx vertx) {
