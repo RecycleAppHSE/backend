@@ -11,7 +11,7 @@ $ docker build . -t rcycle-app
 $ docker run -e DB_URI="postgres://..." -p 8080:8080 rcycle-app
 ```
 
-**DB_URI** is a standrart posrgres URI, sectiom [32.1.1.2](https://www.postgresql.org/docs/9.3/libpq-connect.html#LIBPQ-PARAMKEYWORDS)
+**DB_URI** is a standrart posrgres URI, section [31.1.1.2. Connection URIs](https://www.postgresql.org/docs/9.3/libpq-connect.html)
 
 
 # Code Style
