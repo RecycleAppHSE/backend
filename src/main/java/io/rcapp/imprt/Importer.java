@@ -6,9 +6,10 @@ import io.vertx.reactivex.core.Vertx;
 import io.vertx.reactivex.ext.web.client.WebClient;
 import io.vertx.reactivex.pgclient.PgPool;
 import io.vertx.reactivex.sqlclient.Tuple;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /** App which imports data. */
 public class Importer {
@@ -56,6 +57,7 @@ public class Importer {
                 )
             )
         ).blockingAwait();
+    vertx.close();
     System.exit(0);
   }
 }
