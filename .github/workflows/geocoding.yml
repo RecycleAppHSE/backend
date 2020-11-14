@@ -2,7 +2,7 @@ name: Daily databse gecoding
 on:
   schedule:
     # every day at 22:10
-    - cron: '10 22 * * *'
+    - cron: '15 19 * * *'
 jobs:
   geocoding:
     runs-on: ubuntu-latest
