@@ -65,7 +65,7 @@ task Geocoder(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Geocoder',
                 'Implementation-Version': "1.0",
-                'Main-Class': 'io.rcapp.imprt.LocationIQ'
+                'Main-Class': 'io.rcapp.imprt.Geocoder'
     }
     archiveBaseName = "geocoder"
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
