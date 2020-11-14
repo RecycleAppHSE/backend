@@ -5,3 +5,7 @@
 build
 .idea/
 out/
+
+# VS Code
+.classpath
+.project
