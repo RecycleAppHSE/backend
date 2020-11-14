@@ -1,15 +1,13 @@
 package io.rcapp;
 
-import io.rcapp.domain.Corrections;
-import io.rcapp.domain.Point;
-import io.rcapp.domain.Schedule;
-import io.rcapp.domain.User;
+import io.rcapp.domain.*;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.vertx.reactivex.pgclient.PgPool;
 import io.vertx.reactivex.sqlclient.Row;
 import io.vertx.reactivex.sqlclient.Tuple;
+
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +19,33 @@ public class DB {
 
   public DB(PgPool pool) {
     this.pool = pool;
+  }
+
+  /**
+   * @param count count of pairs to fetch
+   * @return flow of coordinates: pair of Latitude and Longitude
+   */
+  public Flowable<PointIdWIthLocation> pointsWithoutAddress(long count) {
+    return pool.preparedQuery(
+        String.format(
+              """
+              select id,
+                     st_x(st_transform(geom, 4326)) as longitude,
+                     st_y(st_transform(geom, 4326)) as latitude
+              from collection_point
+              where address is null
+              limit %d
+              """,
+            count
+        )
+    )
+        .rxExecute()
+        .flatMapPublisher(Flowable::fromIterable)
+        .map(row -> new PointIdWIthLocation(
+            row.getLong("id"),
+            row.getDouble("latitude"),
+            row.getDouble("longitude"))
+        );
   }
 
   public Single<Long> newUser() {

@@ -60,3 +60,14 @@ task Importer(type: Jar) {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
+
+task Geocoder(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Geocoder',
+                'Implementation-Version': "1.0",
+                'Main-Class': 'io.rcapp.imprt.LocationIQ'
+    }
+    archiveBaseName = "geocoder"
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

@@ -1,0 +1,20 @@
+name: Daily databse gecoding
+on:
+  schedule:
+    # every day at 22:00
+    - cron: '0 22 * * *'
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '15'
+          java-package: jdk
+      - name: Build
+        run: ./gradlew clean build Geocoder
+      - name: Perform import
+        run: |
+          LIQ_TOKEN="{ secrets.LIQ_TOKEN }" DB_URI="${{ secrets.DB_URI }}" java --enable-preview -jar build/libs/importer.jar
