@@ -9,3 +9,5 @@ out/
 # VS Code
 .classpath
 .project
+bin/
+.settings/
