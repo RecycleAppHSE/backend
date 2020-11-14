@@ -12,6 +12,7 @@ create extension postgis;
 create table collection_point
 (
     id                serial primary key,
+    -- recycle map field
     gid               int unique     not null,
     feature_name      text           not null,
     plastic           bool           not null,
@@ -28,11 +29,13 @@ create table collection_point
     caps              bool           not null,
     tires             bool           not null,
     geom              geometry       not null,
+    -- additional fields
     phone_number      text,
     web_site          text,
     works             text default 'works_fine',               -- can be broken, would_not_work, works_fine
     last_updated      timestamp without time zone
                            default (now() at time zone 'utc'), -- utc timestamp
     schedule          text,                                    -- example: '09:00-17:00'
-    corrections_count int  default 0 not null
+    corrections_count int  default 0 not null,
+    address           text
 );
