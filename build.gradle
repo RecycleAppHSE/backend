@@ -50,9 +50,9 @@ jar {
     archiveBaseName = "backend"
 }
 
-task RecycleMapRuImport(type: Jar) {
+task Importer(type: Jar) {
     manifest {
-        attributes 'Implementation-Title': 'RecycleMapRuImport',
+        attributes 'Implementation-Title': 'Importer',
                 'Implementation-Version': "1.0",
                 'Main-Class': 'io.rcapp.imprt.Importer'
     }

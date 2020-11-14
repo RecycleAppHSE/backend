@@ -14,7 +14,7 @@ jobs:
           java-version: '15'
           java-package: jdk
       - name: Build
-        run: ./gradlew clean build RecycleMapRuImport
+        run: ./gradlew clean build Importer
       - name: Perform import
         run: |
           DB_URI="${{ secrets.DB_URI }}" java --enable-preview -jar build/libs/importer.jar
