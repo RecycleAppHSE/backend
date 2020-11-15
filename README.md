@@ -21,3 +21,7 @@ The project uses Google Code Style. Run `./gradlew goJF` for automatic formattin
 # API specification
 
 API specification can be found at [`API.md`](./API.md) file.
+
+## Usefull link
+
+[Postgres Full Text Search](https://www.postgresql.org/docs/current/textsearch.html) - used for collection points search by address

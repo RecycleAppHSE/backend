@@ -5,7 +5,7 @@ Client communicate with server by sending HTTP 1.1 requests.
 <p>
 
 
-## Collection points near
+## Collection points get all/specific id
 
 Request example:
 
@@ -25,6 +25,7 @@ HTTP/1.1 200 OK
     {
       "id": 21
       "name": "Pokrovsky bulvar 2",
+      "address" : "179Б, улица Попова, Куета, Индустриальный район, Barnaul, городской округ Барнаул, Altai Krai, Siberian Federal District, 656000, Russia",
       "phone_number": "+74994001041",
       "web_site": "https://www.hse.ru/",
       "recycle": ["metal", "glass", "plastic", "paper"],
@@ -45,6 +46,44 @@ HTTP/1.1 200 OK
 * if `pointId` is not specified, all is returned.
 * `shedule` is null when schedule is not specified.
 
+## Search collection points by name
+
+Request example:
+
+```
+GET /search?q=Barnaul
+
+USER_ID: 2123
+```
+
+Response example:
+```
+HTTP/1.1 200 OK
+content-length: 6020
+
+{
+  "points" : [ {
+    "id" : 84,
+    "name" : " ТерИК ",
+    "address" : "179Б, улица Попова, Куета, Индустриальный район, Barnaul, городской округ Барнаул, Altai Krai, Siberian Federal District, 656000, Russia",
+    "phone_number" : null,
+    "web_site" : null,
+    "recycle" : [ "toxic", "other", "paper" ],
+    "latitude" : 53.317977,
+    "longitude" : 83.640004,
+    "works" : "works_fine",
+    "last_updated" : 1604352072,
+    "schedule" : {
+      "from" : null,
+      "to" : null
+    },
+    "corrections_count" : 0
+  },...] 
+}
+```
+
+* Response set is always ten elements at max
+
 ## Suggest correction
 
 Request example:
@@ -57,6 +96,7 @@ USER_ID: 2123
 {
     "id": 21
     "name": "Контейнер ГК "Тайгер-Сибирь",
+    "address" : "179Б, улица Попова, Куета, Индустриальный район, Barnaul, городской округ Барнаул, Altai Krai, Siberian Federal District, 656000, Russia",
     "phone_number": "+74994001041",
     "web_site": "https://www.hse.ru/",
     "recycle": ["metal", "glass", "plastic", "paper"],
@@ -101,6 +141,7 @@ HTTP/1.1 200 OK
   "from": {
     "id": 21
     "name": "Pokrovsky bulvar 2",
+    "address" : "179Б, улица Попова, Куета, Индустриальный район, Barnaul, городской округ Барнаул, Altai Krai, Siberian Federal District, 656000, Russia",
     "phone_number": "+74994001041",
     "web_site": "https://www.hse.ru/",
     "recycle": ["metal", "glass", "plastic", "paper"],
@@ -117,6 +158,7 @@ HTTP/1.1 200 OK
   "to": {
     "id": 21
     "name": "Pokrovsky bulvar 2",
+    "address" : "179Б, улица Попова, Куета, Индустриальный район, Barnaul, городской округ Барнаул, Altai Krai, Siberian Federal District, 656000, Russia",
     "phone_number": "+74994001041",
     "web_site": "https://www.hse.ru/",
     "recycle": ["metal", "glass", "plastic", "paper"],
