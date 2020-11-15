@@ -15,6 +15,35 @@ import java.util.stream.Collectors;
 
 public class DB {
 
+  private static final String SELECT_POINT =
+          """
+          SELECT id,
+                 feature_name as name,
+                 phone_number,
+                 web_site,
+                 plastic,
+                 glass,
+                 paper,
+                 metal,
+                 tetra_pack,
+                 batteries,
+                 light_bulbs,
+                 clothes,
+                 appliances,
+                 toxic,
+                 other,
+                 caps,
+                 tires,
+                 ST_X(st_transform(geom, 4326)) as longitude,
+                 ST_Y(st_transform(geom, 4326)) as latitude,
+                 works,
+                 last_updated,
+                 schedule,
+                 corrections_count,
+                 address
+          from collection_point
+          """;
+
   private PgPool pool;
 
   public DB(PgPool pool) {
@@ -77,34 +106,21 @@ public class DB {
   }
 
   public Flowable<Point> allPoints() {
-    return pool.preparedQuery(
-      """
-          SELECT id,
-                 feature_name as name,
-                 phone_number,
-                 web_site,
-                 plastic,
-                 glass,
-                 paper,
-                 metal,
-                 tetra_pack,
-                 batteries,
-                 light_bulbs,
-                 clothes,
-                 appliances,
-                 toxic,
-                 other,
-                 caps,
-                 tires,
-                 ST_X(st_transform(geom, 4326)) as longitude,
-                 ST_Y(st_transform(geom, 4326)) as latitude,
-                 works,
-                 last_updated,
-                 schedule,
-                 corrections_count
-          from collection_point
-          """)
+    return pool.preparedQuery(SELECT_POINT)
         .rxExecute()
+        .flatMapPublisher(Flowable::fromIterable)
+        .map(DB::rowToPoint);
+  }
+
+  public Flowable<Point> search(final String query) {
+    return pool.preparedQuery(
+        String.format(
+            """
+                %s
+                WHERE to_tsvector('russian', address) @@ to_tsquery($1)
+                LIMIT 10
+                """, SELECT_POINT))
+        .rxExecute(Tuple.of(query + ":*"))
         .flatMapPublisher(Flowable::fromIterable)
         .map(DB::rowToPoint);
   }
@@ -113,6 +129,7 @@ public class DB {
     return new Point(
         row.getLong("id"),
         row.getString("name"),
+        row.getString("address"),
         row.getString("phone_number"),
         row.getString("web_site"),
         rowToRecycleList(row),

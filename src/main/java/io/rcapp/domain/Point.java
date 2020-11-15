@@ -6,6 +6,7 @@ import java.util.Set;
 public record Point(
     @JsonProperty("id") Long id,
     @JsonProperty("name") String name,
+    @JsonProperty("address") String address,
     @JsonProperty("phone_number") String phoneNumber,
     @JsonProperty("web_site") String webSite,
     @JsonProperty("recycle") Set<String> recycle,

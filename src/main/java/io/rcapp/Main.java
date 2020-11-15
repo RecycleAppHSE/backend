@@ -43,6 +43,7 @@ public class Main {
     // NEWS
     // MAP
     router.get("/point").handler(new Auth(api::allPoints));
+    router.get("/search").handler(new Auth(api::search));
     vertx
         .createHttpServer(
             new HttpServerOptions().setCompressionSupported(true).setCompressionLevel(9))

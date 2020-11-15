@@ -39,4 +39,16 @@ public class API {
               return new JsonObject().put("points", arr);
             });
   }
+
+  public Single<JsonObject> search(RoutingContext routingContext, Long userId) {
+    return db.search(routingContext.request().getParam("q"))
+        .map(JsonObject::mapFrom)
+        .toList()
+        .map(
+            points -> {
+              final JsonArray arr = new JsonArray();
+              points.forEach(arr::add);
+              return new JsonObject().put("points", arr);
+            });
+  }
 }

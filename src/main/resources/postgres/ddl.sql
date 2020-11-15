@@ -39,3 +39,5 @@ create table collection_point
     corrections_count int  default 0 not null,
     address           text
 );
+
+CREATE INDEX full_text_by_address_ru ON collection_point USING GIN (to_tsvector('russian', address));
