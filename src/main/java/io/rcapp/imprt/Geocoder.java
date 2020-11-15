@@ -25,9 +25,9 @@ public class Geocoder {
     PgPool pool = PgPool.pool(System.getenv("DB_URI"));
     final DB db = new DB(pool);
     final LocationIQ liq = new LocationIQ(System.getenv("LIQ_TOKEN"), WebClient.create(vertx));
-    db.pointsWithoutAddress(4000)
+    db.pointsWithoutAddress(1000)
         .buffer(2)
-        .flatMap(elem -> Flowable.just(elem).delaySubscription(1001, TimeUnit.MILLISECONDS), 1)
+        .flatMap(elem -> Flowable.just(elem).delaySubscription(2, TimeUnit.SECONDS), 1)
         .flatMap(
             points ->
                 Single.merge(
@@ -48,7 +48,7 @@ public class Geocoder {
                             () ->
                                 log.info(
                                     "updated address for {} collection points", tuples.size()))))
-        .blockingAwait();
+        .blockingGet();
     vertx.close();
     System.exit(0);
   }
