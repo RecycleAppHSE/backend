@@ -40,7 +40,13 @@ public class API {
             });
   }
 
-  public Single<JsonObject> search(RoutingContext routingContext, Long userId) {
+  public Single<JsonObject> point(RoutingContext routingContext, Long userId) {
+      return db.point(Long.parseLong(routingContext.pathParam("pointId")))
+          .map(JsonObject::mapFrom);
+  }
+
+
+    public Single<JsonObject> search(RoutingContext routingContext, Long userId) {
     return db.search(routingContext.request().getParam("q"))
         .map(JsonObject::mapFrom)
         .toList()

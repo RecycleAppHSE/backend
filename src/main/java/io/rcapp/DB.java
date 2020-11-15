@@ -112,6 +112,18 @@ public class DB {
         .map(DB::rowToPoint);
   }
 
+  public Single<Point> point(Long id) {
+    return pool.preparedQuery(
+        String.format(
+            """
+                %s
+                WHERE id = $1
+                """, SELECT_POINT))
+        .rxExecute(Tuple.of(id))
+        .map(set -> set.iterator().next())
+        .map(DB::rowToPoint);
+  }
+
   public Flowable<Point> search(final String query) {
     return pool.preparedQuery(
         String.format(
