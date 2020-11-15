@@ -1,8 +1,8 @@
 name: Daily databse gecoding
 on:
   schedule:
-    # every day at 2 am
-    - cron: '0 2 * * *'
+    # every 8th hour
+    - cron: '0 */8 * * *'
 jobs:
   geocoding:
     runs-on: ubuntu-latest
