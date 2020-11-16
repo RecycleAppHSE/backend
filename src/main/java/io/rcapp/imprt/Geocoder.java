@@ -25,31 +25,36 @@ public class Geocoder {
     PgPool pool = PgPool.pool(System.getenv("DB_URI"));
     final DB db = new DB(pool);
     final LocationIQ liq = new LocationIQ(System.getenv("LIQ_TOKEN"), WebClient.create(vertx));
-    db.pointsWithoutAddress(1000)
-        .buffer(2)
-        .flatMap(elem -> Flowable.just(elem).delaySubscription(2, TimeUnit.SECONDS), 1)
-        .flatMap(
-            points ->
-                Single.merge(
-                    points.stream()
-                        .map(
-                            point ->
-                                liq.resolve(point.latitude(), point.longitude())
-                                    .map(name -> Tuple.of(name, point.id())))
-                        .collect(Collectors.toList())))
-        .buffer(2)
-        .flatMapCompletable(
-            tuples ->
-                pool.preparedQuery("update collection_point set address = $1 where id = $2")
-                    .rxExecuteBatch(tuples)
-                    .ignoreElement()
-                    .andThen(
-                        Completable.fromRunnable(
-                            () ->
-                                log.info(
-                                    "updated address for {} collection points", tuples.size()))))
-        .blockingGet();
-    vertx.close();
+    try {
+      db.pointsWithoutAddress(1000)
+          .buffer(2)
+          .flatMap(elem -> Flowable.just(elem).delaySubscription(2, TimeUnit.SECONDS), 1)
+          .flatMap(
+              points ->
+                  Single.merge(
+                      points.stream()
+                          .map(
+                              point ->
+                                  liq.resolve(point.latitude(), point.longitude())
+                                      .map(name -> Tuple.of(name, point.id())))
+                          .collect(Collectors.toList())))
+          .buffer(2)
+          .flatMapCompletable(
+              tuples ->
+                  pool.preparedQuery("update collection_point set address = $1 where id = $2")
+                      .rxExecuteBatch(tuples)
+                      .ignoreElement()
+                      .andThen(
+                          Completable.fromRunnable(
+                              () ->
+                                  log.info(
+                                      "updated address for {} collection points", tuples.size()))))
+          .blockingAwait();
+    } catch (Exception e) {
+      System.exit(-1);
+    } finally {
+      vertx.close();
+    }
     System.exit(0);
   }
 }

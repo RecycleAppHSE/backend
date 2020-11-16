@@ -17,4 +17,4 @@ jobs:
         run: ./gradlew clean build Geocoder
       - name: Perform geocoding
         run: |
-          LIQ_TOKEN="{ secrets.LIQ_TOKEN }" DB_URI="${{ secrets.DB_URI }}" java --enable-preview -jar build/libs/geocoder.jar
+          LIQ_TOKEN="{{ secrets.LIQ_TOKEN }}" DB_URI="${{ secrets.DB_URI }}" java --enable-preview -jar build/libs/geocoder.jar
