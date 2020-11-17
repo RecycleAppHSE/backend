@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 /** Performs dataset geocoding. */
 public class Geocoder {
 
-  private static final Logger log = LoggerFactory.getLogger(Importer.class);
+  private static final Logger log = LoggerFactory.getLogger(Geocoder.class);
 
   public static void main(String[] args) {
     final Vertx vertx = Vertx.vertx();
