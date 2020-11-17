@@ -40,4 +40,4 @@ create table collection_point
     address           text
 );
 
-CREATE INDEX full_text_by_address_ru ON collection_point USING GIN (to_tsvector('russian', address));
+CREATE INDEX full_text_by_address ON collection_point USING GIN (to_tsvector('english', address));

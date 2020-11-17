@@ -129,7 +129,7 @@ public class DB {
         String.format(
             """
                 %s
-                WHERE to_tsvector('russian', address) @@ to_tsquery($1)
+                WHERE to_tsvector('english',address) @@ to_tsquery($1)
                 LIMIT 10
                 """, SELECT_POINT))
         .rxExecute(Tuple.of(query + ":*"))
