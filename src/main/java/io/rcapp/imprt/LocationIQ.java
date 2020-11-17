@@ -26,6 +26,7 @@ public class LocationIQ {
         .addQueryParam("lat", String.valueOf(latitude))
         .addQueryParam("lon", String.valueOf(longitude))
         .addQueryParam("format", "json")
+        .addQueryParam("accept-language", "ru")
         .rxSend()
         .flatMap(
             resp -> {
