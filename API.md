@@ -109,6 +109,8 @@ HTTP/1.1 200 OK
 }
 ```
 
+* Possible filed types are "recycle" and "works".
+
 ## Get correction by id
 
 Request example:
