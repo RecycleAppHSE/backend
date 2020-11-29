@@ -37,8 +37,7 @@ public class Geocoder {
                               point ->
                                   liq.resolve(point.latitude(), point.longitude())
                                       .onErrorReturnItem("NOT_FOUND")
-                                      .map(name -> Tuple.of(name, point.id()))
-                          )
+                                      .map(name -> Tuple.of(name, point.id())))
                           .collect(Collectors.toList())))
           .buffer(2)
           .flatMapCompletable(
