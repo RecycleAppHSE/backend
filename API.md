@@ -135,12 +135,35 @@ HTTP/1.1 200 OK
 }
 ```
 
+## Like/dislike correction
+
+Request example:
+
+```
+POST /correction/5/like
+
+USER_ID: 2123
+
+{
+    "like": 1
+}
+```
+
+* `like` == 1 means to like a correction
+* `like` == 0 means to unlike/undislike
+* `like` == -1 means to dislike a correction
+
+Response example:
+
+```
+HTTP/1.1 200 OK
+```
+
 </p>
 </details>
 
 <details><summary>NEWS</summary>
 <p>
-
 
 ## Get news
 
