@@ -1,12 +1,8 @@
 package io.rcapp;
 
 import io.reactivex.plugins.RxJavaPlugins;
-import io.vertx.core.http.HttpServerOptions;
 import io.vertx.reactivex.core.RxHelper;
 import io.vertx.reactivex.core.Vertx;
-import io.vertx.reactivex.ext.web.Router;
-import io.vertx.reactivex.ext.web.handler.BodyHandler;
-import io.vertx.reactivex.pgclient.PgPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
