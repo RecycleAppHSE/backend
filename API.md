@@ -94,21 +94,8 @@ POST /correction/suggest
 USER_ID: 2123
 
 {
-    "id": 21
-    "name": "Контейнер ГК "Тайгер-Сибирь",
-    "address" : "179Б, улица Попова, Куета, Индустриальный район, Barnaul, городской округ Барнаул, Altai Krai, Siberian Federal District, 656000, Russia",
-    "phone_number": "+74994001041",
-    "web_site": "https://www.hse.ru/",
-    "recycle": ["metal", "glass", "plastic", "paper"],
-    "latitude": 38.8951,
-    "longitude": -77.0364,
-    "works": "works_fine",
-    "last_updated": 1604343073
-    "shedule":{
-        "from": "09:00",
-        "to": "17:00"
-     },
-    "corrections_count": 2 
+    "field": "recycle",
+    "change_to": ["metal", "glass", "plastic", "paper"]
 }
 ```
 
@@ -138,40 +125,9 @@ Response example:
 HTTP/1.1 200 OK
 
 {
-  "from": {
-    "id": 21
-    "name": "Pokrovsky bulvar 2",
-    "address" : "179Б, улица Попова, Куета, Индустриальный район, Barnaul, городской округ Барнаул, Altai Krai, Siberian Federal District, 656000, Russia",
-    "phone_number": "+74994001041",
-    "web_site": "https://www.hse.ru/",
-    "recycle": ["metal", "glass", "plastic", "paper"],
-    "latitude": 38.8951,
-    "longitude": -77.0364,
-    "works": "broken",
-    "last_updated": 1604343073
-    "shedule":{
-        "from": "09:00",
-        "to": "17:00"
-     },
-    "corrections_count": 2 
-  },
-  "to": {
-    "id": 21
-    "name": "Pokrovsky bulvar 2",
-    "address" : "179Б, улица Попова, Куета, Индустриальный район, Barnaul, городской округ Барнаул, Altai Krai, Siberian Federal District, 656000, Russia",
-    "phone_number": "+74994001041",
-    "web_site": "https://www.hse.ru/",
-    "recycle": ["metal", "glass", "plastic", "paper"],
-    "latitude": 38.8951,
-    "longitude": -77.0364,
-    "works": "works_fine",
-    "last_updated": 1604343073
-    "shedule":{
-        "from": "09:00",
-        "to": "17:00"
-     },
-    "corrections_count": 2 
-  }
+    "id": 5,
+    "field": "recycle",
+    "change_to": ["metal", "glass", "plastic", "paper"]
 }
 ```
 
