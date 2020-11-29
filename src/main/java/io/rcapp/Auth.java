@@ -27,6 +27,10 @@ public class Auth implements Handler<RoutingContext> {
       event.response().setStatusCode(401).end();
       return;
     }
-    function.apply(event, id).subscribe(json -> event.response().end(json.encodePrettily()));
+    function
+        .apply(event, id)
+        .subscribe(
+            json -> event.response().end(json.encodePrettily()),
+            error -> event.response().setStatusCode(400).end());
   }
 }

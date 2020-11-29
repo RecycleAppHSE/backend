@@ -56,15 +56,15 @@ CREATE TYPE correction_status AS ENUM (
 create table correction
 (
     id                  serial primary key,
-    rc_user_id          integer                           not null,
-    collection_point_id integer                           not null,
-    field               collection_point_field_for_change not null, -- Field at collection_point
-    change_to           text                              not null, -- Example: ["light_bulbs", "glass"]
-    status              correction_status                 not null, -- Correction status
+    rc_user_id          integer                                 not null,
+    collection_point_id integer                                 not null,
+    field               collection_point_field_for_change       not null,     -- Field at collection_point
+    change_to           text                                    not null,     -- Example: ["light_bulbs", "glass"]
+    status              correction_status default 'in-progress' not null,     -- Correction status
     submit_time         timestamp without time zone
-        default (now() at time zone 'utc'),                         -- utc timestamp
-    like_count          integer                           not null,
-    dislike_count       integer                           not null,
+                                          default (now() at time zone 'utc'), -- utc timestamp
+    like_count          integer           default 0             not null,
+    dislike_count       integer           default 0             not null,
     constraint fk_correction_rc_user_id foreign key (rc_user_id) references rc_user (id),
     constraint fk_correction_collection_point_id foreign key (collection_point_id) references collection_point (id)
 );

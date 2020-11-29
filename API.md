@@ -94,9 +94,7 @@ POST /correction/suggest
 USER_ID: 2123
 
 {
-    "point_id": 11,
-    "field": "recycle",
-    "change_to": ["metal", "glass", "plastic", "paper"]
+    "point_id": 11, "field": "recycle", "change_to": ["metal", "glass", "plastic", "paper"]
 }
 ```
 

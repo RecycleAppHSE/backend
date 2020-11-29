@@ -4,6 +4,8 @@ import io.reactivex.Single;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.ext.web.RoutingContext;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class API {
 
@@ -57,7 +59,40 @@ public class API {
   }
 
   public Single<JsonObject> suggest(RoutingContext routingContext, Long userId) {
-    return Single.just(new JsonObject());
+    final JsonObject request = routingContext.getBodyAsJson();
+    final String changeTo;
+    final String field = request.getString("field");
+    if (field.equals("recycle")
+        && request.getValue("change_to") instanceof JsonArray
+        && Set.of(
+                "plastic",
+                "glass",
+                "paper",
+                "metal",
+                "tetra_pack",
+                "batteries",
+                "light_bulbs",
+                "clothes",
+                "appliances",
+                "toxic",
+                "other",
+                "caps",
+                "tires")
+            .containsAll(
+                request.getJsonArray("change_to").stream()
+                    .map(el -> (String) el)
+                    .collect(Collectors.toSet()))) {
+      changeTo = request.getJsonArray("change_to").encode();
+    } else if (field.equals("works")
+        && request.getValue("change_to") instanceof String
+        && Set.of("broken", "would_not_work", "works_fine")
+            .contains(request.getString("change_to"))) {
+      changeTo = request.getString("change_to");
+    } else {
+      return Single.error(new Exception("Invalid request"));
+    }
+    return db.newCorrection(userId, request.getLong("point_id"), field, changeTo)
+        .map(id -> new JsonObject().put("correction_id", id));
   }
 
   public Single<JsonObject> correction(RoutingContext routingContext, Long userId) {

@@ -124,6 +124,16 @@ public class DB {
         .map(DB::rowToPoint);
   }
 
+  public Single<Long> newCorrection(Long userId, Long pointId, String field, String changeTo) {
+    return pool.preparedQuery(
+        """
+            insert into correction(rc_user_id, collection_point_id, field, change_to)
+            values ($1, $2, $3, $4) returning id
+            """)
+        .rxExecute(Tuple.of(userId, pointId, field, changeTo))
+        .map(rows -> rows.iterator().next().getLong(0));
+  }
+
   public Flowable<Point> search(final String query) {
     return pool.preparedQuery(
         String.format(
