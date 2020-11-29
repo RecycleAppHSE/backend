@@ -7,9 +7,7 @@ import io.vertx.reactivex.ext.web.Router;
 import io.vertx.reactivex.ext.web.handler.BodyHandler;
 import io.vertx.reactivex.pgclient.PgPool;
 
-/**
- * The http server of this app.
- */
+/** The http server of this app. */
 public class Server {
 
   private final HttpServer server;
@@ -56,6 +54,9 @@ public class Server {
     router.get("/point").handler(new Auth(api::allPoints));
     router.get("/point/:pointId").handler(new Auth(api::point));
     router.get("/search").handler(new Auth(api::search));
+    router.post("/correction/suggest").handler(new Auth(api::suggest));
+    router.get("/correction/:correctionId").handler(new Auth(api::correction));
+    router.post("/correction/:correctionId/like").handler(new Auth(api::like));
     return router;
   }
 }

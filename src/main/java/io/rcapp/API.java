@@ -55,4 +55,16 @@ public class API {
               return new JsonObject().put("points", arr);
             });
   }
+
+  public Single<JsonObject> suggest(RoutingContext routingContext, Long userId) {
+    return Single.just(new JsonObject());
+  }
+
+  public Single<JsonObject> correction(RoutingContext routingContext, Long userId) {
+    return Single.just(new JsonObject());
+  }
+
+  public Single<JsonObject> like(RoutingContext routingContext, Long userId) {
+    return Single.just(new JsonObject());
+  }
 }
