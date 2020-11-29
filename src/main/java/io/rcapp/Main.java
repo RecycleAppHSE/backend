@@ -18,38 +18,8 @@ public class Main {
     final Vertx vertx = Vertx.vertx();
     final var port = 8080;
     useVertxSchedulers(vertx);
-    startServer(vertx, port);
+    new Server(vertx, port).start();
     log.info("Started at port {}", port);
-  }
-
-  private static void startServer(Vertx vertx, int port) {
-    final String uri = System.getenv("DB_URI");
-    final PgPool pool = PgPool.pool(uri);
-    final DB db = new DB(pool);
-    final API api = new API(db);
-    final Router router = Router.router(vertx);
-    router.route().handler(BodyHandler.create());
-    router
-        .get("/")
-        .handler(
-            req -> {
-              req.response().putHeader("content-type", "text/plain").end("Hello world!");
-            });
-    // USER PROFILE
-    router.get("/new_user").handler(api::newUser);
-    router.post("/change_name").handler(new Auth(api::changeName));
-    router.get("/me").handler(new Auth(api::me));
-    // ADVICES
-    // NEWS
-    // MAP
-    router.get("/point").handler(new Auth(api::allPoints));
-    router.get("/point/:pointId").handler(new Auth(api::point));
-    router.get("/search").handler(new Auth(api::search));
-    vertx
-        .createHttpServer(
-            new HttpServerOptions().setCompressionSupported(true).setCompressionLevel(9))
-        .requestHandler(router)
-        .listen(port);
   }
 
   public static void useVertxSchedulers(Vertx vertx) {
