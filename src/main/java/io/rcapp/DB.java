@@ -1,9 +1,12 @@
 package io.rcapp;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.rcapp.domain.*;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.pgclient.PgPool;
 import io.vertx.reactivex.sqlclient.Row;
 import io.vertx.reactivex.sqlclient.Tuple;
@@ -134,6 +137,26 @@ public class DB {
         .map(rows -> rows.iterator().next().getLong(0));
   }
 
+  public Single<JsonObject> correction(Long correctionId) {
+    return pool.preparedQuery(
+        """
+            select
+                id,
+                rc_user_id,
+                collection_point_id,
+                field,
+                change_to,
+                status,
+                submit_time,
+                like_count,
+                dislike_count
+            from correction where id = $1
+            """)
+        .rxExecute(Tuple.of(correctionId))
+        .map(set -> set.iterator().next())
+        .map(DB::rowToCorrection);
+  }
+
   public Flowable<Point> search(final String query) {
     return pool.preparedQuery(
         String.format(
@@ -145,6 +168,24 @@ public class DB {
         .rxExecute(Tuple.of(query + ":*"))
         .flatMapPublisher(Flowable::fromIterable)
         .map(DB::rowToPoint);
+  }
+
+  private static JsonObject rowToCorrection(Row row) {
+    String field = row.getString("field");
+    final JsonObject result = new JsonObject();
+    result.put("id", row.getLong("id"));
+    result.put("point_id", row.getLong("collection_point_id"));
+    result.put("field", field);
+    if (field.equals("recycle")) {
+      result.put("change_to", new JsonArray(row.getString("change_to")));
+    } else if (field.equals("works")) {
+      result.put("change_to", row.getString("change_to"));
+    }
+    result.put("status", row.getString("status"));
+    result.put("submit_time", row.getLocalDateTime("submit_time").toEpochSecond(ZoneOffset.UTC));
+    result.put("like_count", row.getLong("like_count"));
+    result.put("dislike_count", row.getLong("dislike_count"));
+    return result;
   }
 
   private static Point rowToPoint(Row row) {

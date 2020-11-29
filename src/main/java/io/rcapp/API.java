@@ -96,7 +96,7 @@ public class API {
   }
 
   public Single<JsonObject> correction(RoutingContext routingContext, Long userId) {
-    return Single.just(new JsonObject());
+    return db.correction(Long.parseLong(routingContext.pathParam("correctionId")));
   }
 
   public Single<JsonObject> like(RoutingContext routingContext, Long userId) {
