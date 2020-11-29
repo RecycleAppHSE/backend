@@ -260,16 +260,14 @@ HTTP/1.1 200 OK
 {
   "name" : "John Smith",
   "photo_url" : "shorturl.at/ehsJ3",
-  "favourite_news_ids" : [1, 56, 5544],
   "collection_points_corrections_ids": 
     {
-      "approved": [5,6,122],
-      "not_approved": [1,7,12]
+      "applied": [5,6,122],
+      "in-progress": [1,7,12],
+      "rejected": [4,87]
     }
 }
 ```
-
-
 
 </p>
 </details>
