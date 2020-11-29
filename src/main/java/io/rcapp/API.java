@@ -100,6 +100,10 @@ public class API {
   }
 
   public Single<JsonObject> like(RoutingContext routingContext, Long userId) {
-    return Single.just(new JsonObject());
+    return db.likeCorrection(
+            userId,
+            Long.parseLong(routingContext.pathParam("correctionId")),
+            routingContext.getBodyAsJson().getLong("like"))
+        .andThen(Single.just(new JsonObject()));
   }
 }

@@ -82,3 +82,5 @@ create table correction_like
     constraint fk_correction_like_correction_id foreign key (correction_id) references correction (id),
     primary key (rc_user_id, correction_id)
 );
+
+select is_like from correction_like where rc_user_id = 12 and correction_id = 1;

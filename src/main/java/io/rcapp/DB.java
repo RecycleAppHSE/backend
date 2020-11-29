@@ -1,7 +1,10 @@
 package io.rcapp;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.rcapp.domain.*;
+import io.rcapp.domain.Corrections;
+import io.rcapp.domain.Point;
+import io.rcapp.domain.PointIdWIthLocation;
+import io.rcapp.domain.Schedule;
+import io.rcapp.domain.User;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -9,6 +12,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.pgclient.PgPool;
 import io.vertx.reactivex.sqlclient.Row;
+import io.vertx.reactivex.sqlclient.Transaction;
 import io.vertx.reactivex.sqlclient.Tuple;
 
 import java.time.ZoneOffset;
@@ -168,6 +172,51 @@ public class DB {
         .rxExecute(Tuple.of(query + ":*"))
         .flatMapPublisher(Flowable::fromIterable)
         .map(DB::rowToPoint);
+  }
+
+  public Completable likeCorrection(long userId, long correctionId, long like) {
+    return pool.rxBegin().flatMapCompletable(tx ->
+            tx.preparedQuery("select is_like from correction_like where rc_user_id = $1 and correction_id = $2")
+                .rxExecute(Tuple.of(userId, correctionId))
+                .flatMapCompletable(set -> {
+                  boolean empty = !set.iterator().hasNext();
+                  boolean isLike = empty ? false : set.iterator().next().getBoolean("is_like");
+                  if (empty && like == 0) {
+                    return Completable.complete();
+                  } else if (!empty && like == 0) {
+                    return tx.preparedQuery("delete from correction_like where rc_user_id = $1 and correction_id = $2")
+                        .rxExecute(Tuple.of(userId, correctionId))
+                        .ignoreElement()
+                        .andThen(txChangeLikeCounter(tx, correctionId, isLike, -1));
+                  } else if (empty && like != 0) {
+                    return tx.preparedQuery("insert into correction_like(rc_user_id, correction_id, is_like) VALUES ($1,$2,$3)")
+                        .rxExecute(Tuple.of(userId, correctionId, like == 1))
+                        .ignoreElement()
+                        .andThen(txChangeLikeCounter(tx, correctionId, like == 1, 1));
+                  } else if (!empty && like != 0 && isLike == (like == 1)) {
+                    return Completable.complete();
+                  } else if (!empty && like != 0 && isLike != (like == 1)) {
+                    return tx.preparedQuery("update correction_like set is_like = $1 where rc_user_id = $2 and correction_id = $3 ")
+                        .rxExecute(Tuple.of(like == 1, userId, correctionId))
+                        .ignoreElement()
+                        .andThen(txChangeLikeCounter(tx, correctionId, !(like == 1), -1))
+                        .andThen(txChangeLikeCounter(tx, correctionId, like == 1, 1));
+                  }
+                  return Completable.error(new IllegalStateException("Case wasn't found"));
+                }).doAfterTerminate(tx::commit)
+    );
+  }
+
+  private static Completable txChangeLikeCounter(Transaction tx, long correctionId, boolean likeOrDislike, int change) {
+    if (likeOrDislike) {
+      return tx.preparedQuery("update correction set like_count = like_count + $1 where id = $2")
+          .rxExecute(Tuple.of(change, correctionId))
+          .ignoreElement();
+    } else {
+      return tx.preparedQuery("update correction set dislike_count = dislike_count + $1 where id = $2")
+          .rxExecute(Tuple.of(change, correctionId))
+          .ignoreElement();
+    }
   }
 
   private static JsonObject rowToCorrection(Row row) {
