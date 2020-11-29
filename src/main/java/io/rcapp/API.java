@@ -64,24 +64,10 @@ public class API {
     final String field = request.getString("field");
     if (field.equals("recycle")
         && request.getValue("change_to") instanceof JsonArray
-        && Set.of(
-                "plastic",
-                "glass",
-                "paper",
-                "metal",
-                "tetra_pack",
-                "batteries",
-                "light_bulbs",
-                "clothes",
-                "appliances",
-                "toxic",
-                "other",
-                "caps",
-                "tires")
-            .containsAll(
-                request.getJsonArray("change_to").stream()
-                    .map(el -> (String) el)
-                    .collect(Collectors.toSet()))) {
+        && DB.RECYCLE_TYPES.containsAll(
+            request.getJsonArray("change_to").stream()
+                .map(el -> (String) el)
+                .collect(Collectors.toSet()))) {
       changeTo = request.getJsonArray("change_to").encode();
     } else if (field.equals("works")
         && request.getValue("change_to") instanceof String

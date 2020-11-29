@@ -15,13 +15,34 @@ import io.vertx.reactivex.sqlclient.Row;
 import io.vertx.reactivex.sqlclient.RowSet;
 import io.vertx.reactivex.sqlclient.Transaction;
 import io.vertx.reactivex.sqlclient.Tuple;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.ZoneOffset;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DB {
+
+  private static final Logger log = LoggerFactory.getLogger(DB.class);
+
+  public static final Set<String> RECYCLE_TYPES = Set.of(
+      "plastic",
+      "glass",
+      "paper",
+      "metal",
+      "tetra_pack",
+      "batteries",
+      "light_bulbs",
+      "clothes",
+      "appliances",
+      "toxic",
+      "other",
+      "caps",
+      "tires"
+  );
 
   private static final String SELECT_POINT =
           """
@@ -179,15 +200,66 @@ public class DB {
     return pool.rxBegin().flatMapCompletable(tx ->
             tx.preparedQuery("select is_like from correction_like where rc_user_id = $1 and correction_id = $2")
                 .rxExecute(Tuple.of(userId, correctionId))
-                .flatMapCompletable(rs -> updateLikes(userId, correctionId, like, tx, rs))
-                .doAfterTerminate(tx::commit)
+                .flatMapCompletable(rs -> updateLikes(tx, userId, correctionId, like, rs))
+                .andThen(applyChangesIfNeeded(tx, correctionId))
+                .doOnComplete(tx::commit)
+                .doOnError(err -> {
+                  tx.rollback();
+                  log.error("Rollback tx cause:", err);
+                })
     );
+  }
+
+
+  private Completable applyChangesIfNeeded(Transaction tx, long correctionId) {
+    return tx.preparedQuery(
+        """
+            update correction
+            SET status = CASE id
+                            WHEN $1 THEN 'applied'::correction_status
+                            ELSE 'rejected'::correction_status
+                         END
+            where field = (select field from correction where id = $1)
+              and collection_point_id = (select collection_point_id from correction where id = $1)
+              and (select like_count - dislike_count from correction where id = $1) >= 3
+            returning correction.id as id,
+                      correction.field as field,
+                      correction.collection_point_id as collection_point_id,
+                      correction.status as status,
+                      correction.change_to as change_to   
+            """)
+        .rxExecute(Tuple.of(correctionId))
+        .flatMapPublisher(Flowable::fromIterable)
+        .filter(row -> row.getString("status").equals("applied"))
+        .flatMapCompletable(row -> {
+          final String field = row.getString("field");
+          final String changeTo = row.getString("change_to");
+          final Long pointId = row.getLong("collection_point_id");
+          if (field.equals("works")) {
+            return tx.preparedQuery("update collection_point set works = $1 where id = $2")
+                .rxExecute(Tuple.of(changeTo, pointId))
+                .ignoreElement();
+          } else if (field.equals("recycle")) {
+            Set<String> trues = new JsonArray(changeTo).stream().map(el -> (String) el).collect(Collectors.toSet());
+            Set<String> falses = new HashSet<>(RECYCLE_TYPES);
+            falses.removeAll(trues);
+            List<String> truesCond = trues.stream().map(str -> String.format(str + " = true")).collect(Collectors.toList());
+            List<String> falsesCond = falses.stream().map(str -> String.format(str + " = false")).collect(Collectors.toList());
+            truesCond.addAll(falsesCond);
+            final String sets = truesCond.stream().collect(Collectors.joining(",\n"));
+            String sql = "update collection_point set " + sets + " where id = $1";
+            return tx.preparedQuery(sql)
+                .rxExecute(Tuple.of(pointId))
+                .ignoreElement();
+          }
+          return Completable.error(new IllegalStateException("Unknown field to apply update"));
+        });
   }
 
   /**
    * Updates likes for correction_like and correction tables.
    */
-  private Completable updateLikes(long userId, long correctionId, long like, Transaction tx, RowSet<Row> set) {
+  private Completable updateLikes(Transaction tx, long userId, long correctionId, long like, RowSet<Row> set) {
     boolean empty = !set.iterator().hasNext();
     boolean isLike = empty ? false : set.iterator().next().getBoolean("is_like");
     if (empty && like == 0) {
