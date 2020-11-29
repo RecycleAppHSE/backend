@@ -7,6 +7,9 @@ import io.vertx.reactivex.ext.web.Router;
 import io.vertx.reactivex.ext.web.handler.BodyHandler;
 import io.vertx.reactivex.pgclient.PgPool;
 
+/**
+ * The http server of this app.
+ */
 public class Server {
 
   private final HttpServer server;
