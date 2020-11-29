@@ -58,8 +58,7 @@ create table correction
     id                  serial primary key,
     rc_user_id          integer                           not null,
     collection_point_id integer                           not null,
-    field               collection_point_field_for_change not null, -- Field at collection_point.
-    change_from         text                              not null, -- Example: ["paper", "toxic"]
+    field               collection_point_field_for_change not null, -- Field at collection_point
     change_to           text                              not null, -- Example: ["light_bulbs", "glass"]
     status              correction_status                 not null, -- Correction status
     submit_time         timestamp without time zone
