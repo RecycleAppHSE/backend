@@ -120,17 +120,32 @@ public class DB {
   }
 
   public Single<User> me(Long userId) {
-    return pool.preparedQuery("select id, name, photo_url from rc_user where id = $1")
+    return pool.preparedQuery(
+      """
+      select id, name, photo_url,
+             (select string_agg(id || '', ' ' ORDER BY id) from correction where rc_user_id = 12 and status = 'applied'::correction_status) as applied,
+             (select string_agg(id || '', ' ' ORDER BY id) from correction where rc_user_id = 12 and status = 'rejected'::correction_status) as rejected,
+             (select string_agg(id || '', ' ' ORDER BY id) from correction where rc_user_id = 12 and status = 'in-progress'::correction_status) as in_progress
+      from rc_user where id = $1;
+      """)
         .rxExecute(Tuple.of(userId))
         .map(
             set -> {
               final Row next = set.iterator().next();
+              final String applied = next.getString("applied");
+              final String rejected = next.getString("rejected");
+              final String inProgress = next.getString("in_progress");
               return new User(
                   next.getLong("id"),
                   next.getString("name"),
                   next.getString("photo_url"),
                   List.of(),
-                  new Corrections(List.of(), List.of()));
+                  new Corrections(
+                      applied == null ? List.of() : List.of(applied.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList()),
+                      rejected == null ? List.of() : List.of(rejected.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList()),
+                      inProgress == null ? List.of() : List.of(inProgress.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList())
+                  )
+              );
             });
   }
 

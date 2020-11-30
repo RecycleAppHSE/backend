@@ -294,7 +294,7 @@ HTTP/1.1 200 OK
   "collection_points_corrections_ids": 
     {
       "applied": [5,6,122],
-      "in-progress": [1,7,12],
+      "in_progress": [1,7,12],
       "rejected": [4,87]
     }
 }

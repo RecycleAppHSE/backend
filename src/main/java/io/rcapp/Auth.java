@@ -6,8 +6,12 @@ import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.ext.web.RoutingContext;
 import java.util.function.BiFunction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Auth implements Handler<RoutingContext> {
+
+  private static final Logger log = LoggerFactory.getLogger(Auth.class);
 
   private BiFunction<RoutingContext, Long, Single<JsonObject>> function;
 
@@ -31,6 +35,9 @@ public class Auth implements Handler<RoutingContext> {
         .apply(event, id)
         .subscribe(
             json -> event.response().end(json.encodePrettily()),
-            error -> event.response().setStatusCode(400).end());
+            error -> {
+              log.error("Error:", error);
+              event.response().setStatusCode(400).end();
+            });
   }
 }
