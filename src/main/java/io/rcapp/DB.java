@@ -168,13 +168,24 @@ public class DB {
   }
 
   public Single<Long> newCorrection(Long userId, Long pointId, String field, String changeTo) {
-    return pool.preparedQuery(
-        """
-            insert into correction(rc_user_id, collection_point_id, field, change_to)
-            values ($1, $2, $3, $4) returning id
-            """)
-        .rxExecute(Tuple.of(userId, pointId, field, changeTo))
-        .map(rows -> rows.iterator().next().getLong(0));
+    return pool.rxBegin().flatMap(tx ->
+        tx.preparedQuery("update collection_point set corrections_count = corrections_count + 1 where id = $1")
+        .rxExecute(Tuple.of(pointId))
+        .ignoreElement()
+        .andThen(
+          tx.preparedQuery(
+              """
+                  insert into correction(rc_user_id, collection_point_id, field, change_to)
+                  values ($1, $2, $3, $4) returning id
+                  """)
+              .rxExecute(Tuple.of(userId, pointId, field, changeTo))
+              .map(rows -> rows.iterator().next().getLong(0))
+        )
+        .doAfterSuccess(l -> tx.commit())
+        .doOnError(err -> {
+          tx.rollback();
+          log.error("Rollback tx cause:", err);
+        }));
   }
 
   public Single<JsonObject> correction(Long correctionId) {
