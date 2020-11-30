@@ -141,8 +141,8 @@ public class DB {
                   next.getString("photo_url"),
                   new Corrections(
                       applied == null ? List.of() : List.of(applied.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList()),
-                      rejected == null ? List.of() : List.of(rejected.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList()),
-                      inProgress == null ? List.of() : List.of(inProgress.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList())
+                      inProgress == null ? List.of() : List.of(inProgress.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList()),
+                      rejected == null ? List.of() : List.of(rejected.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList())
                   )
               );
             });
