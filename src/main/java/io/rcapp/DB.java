@@ -139,7 +139,6 @@ public class DB {
                   next.getLong("id"),
                   next.getString("name"),
                   next.getString("photo_url"),
-                  List.of(),
                   new Corrections(
                       applied == null ? List.of() : List.of(applied.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList()),
                       rejected == null ? List.of() : List.of(rejected.split(" ")).stream().map(Long::parseLong).collect(Collectors.toList()),
