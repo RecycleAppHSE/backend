@@ -123,9 +123,9 @@ public class DB {
     return pool.preparedQuery(
       """
       select id, name, photo_url,
-             (select string_agg(id || '', ' ' ORDER BY id) from correction where rc_user_id = 12 and status = 'applied'::correction_status) as applied,
-             (select string_agg(id || '', ' ' ORDER BY id) from correction where rc_user_id = 12 and status = 'rejected'::correction_status) as rejected,
-             (select string_agg(id || '', ' ' ORDER BY id) from correction where rc_user_id = 12 and status = 'in-progress'::correction_status) as in_progress
+             (select string_agg(id || '', ' ' ORDER BY id) from correction where rc_user_id = $1 and status = 'applied'::correction_status) as applied,
+             (select string_agg(id || '', ' ' ORDER BY id) from correction where rc_user_id = $1 and status = 'rejected'::correction_status) as rejected,
+             (select string_agg(id || '', ' ' ORDER BY id) from correction where rc_user_id = $1 and status = 'in-progress'::correction_status) as in_progress
       from rc_user where id = $1;
       """)
         .rxExecute(Tuple.of(userId))
