@@ -46,6 +46,44 @@ HTTP/1.1 200 OK
 * if `pointId` is not specified, all is returned.
 * `shedule` is null when schedule is not specified.
 
+## Collection point corrections by point id
+
+Request example:
+
+```
+GET /point/:pointId/corrections
+
+USER_ID: 2123
+```
+
+Response example:
+```
+HTTP/1.1 200 OK
+content-length: 1438
+
+{
+  "corrections" : [ {
+    "id" : 6,
+    "point_id" : 1,
+    "field" : "works",
+    "change_to" : "broken",
+    "status" : "in-progress",
+    "submit_time" : 1606697003,
+    "like_count" : 0,
+    "dislike_count" : 0
+  }, {
+    "id" : 1,
+    "point_id" : 1,
+    "field" : "recycle",
+    "change_to" : [ "metal", "tetra_pack", "glass", "toxic", "paper" ],
+    "status" : "applied",
+    "submit_time" : 1606696933,
+    "like_count" : 3,
+    "dislike_count" : 0
+  },...]
+}
+```
+
 ## Search collection points by name
 
 Request example:
