@@ -92,4 +92,16 @@ public class API {
             routingContext.getBodyAsJson().getLong("like"))
         .andThen(Single.just(new JsonObject()));
   }
+
+  public Single<JsonObject> correctionsForPoint(RoutingContext routingContext, Long userId) {
+    final Long pointId = Long.parseLong(routingContext.pathParam("pointId"));
+    return db.correctionsByPoint(pointId)
+        .toList()
+        .map(
+            corrections -> {
+              final JsonArray arr = new JsonArray();
+              corrections.forEach(arr::add);
+              return new JsonObject().put("corrections", arr);
+            });
+  }
 }

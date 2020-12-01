@@ -70,7 +70,7 @@ create table correction
 );
 
 create index correction_by_user_id on correction(rc_user_id);
-create index correction_by_collection_point_id on correction(rc_user_id);
+create index correction_by_collection_point_id on correction(collection_point_id);
 create index correction_ftype_and_collection_point_id on correction(collection_point_id, field);
 
 create table correction_like

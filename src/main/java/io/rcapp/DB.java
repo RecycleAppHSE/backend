@@ -208,6 +208,26 @@ public class DB {
         .map(DB::rowToCorrection);
   }
 
+  public Flowable<JsonObject> correctionsByPoint(Long pointId) {
+    return pool.preparedQuery(
+        """
+            select
+                id,
+                rc_user_id,
+                collection_point_id,
+                field,
+                change_to,
+                status,
+                submit_time,
+                like_count,
+                dislike_count
+            from correction where collection_point_id = $1
+            """)
+        .rxExecute(Tuple.of(pointId))
+        .flatMapPublisher(Flowable::fromIterable)
+        .map(DB::rowToCorrection);
+  }
+
   public Flowable<Point> search(final String query) {
     return pool.preparedQuery(
         String.format(

@@ -53,6 +53,7 @@ public class Server {
     // MAP
     router.get("/point").handler(new Auth(api::allPoints));
     router.get("/point/:pointId").handler(new Auth(api::point));
+    router.get("/point/:pointId/corrections").handler(new Auth(api::correctionsForPoint));
     router.get("/search").handler(new Auth(api::search));
     router.post("/correction/suggest").handler(new Auth(api::suggest));
     router.get("/correction/:correctionId").handler(new Auth(api::correction));
