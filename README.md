@@ -13,10 +13,13 @@ $ docker run -e DB_URI="postgres://..." -p 8080:8080 rcycle-app
 
 **DB_URI** is a standrart posrgres URI, section [31.1.1.2. Connection URIs](https://www.postgresql.org/docs/9.3/libpq-connect.html)
 
-
 # Code Style
 
 The project uses Google Code Style. Run `./gradlew goJF` for automatic formatting.
+
+# Clients
+
+* iOS client: https://github.com/RecycleAppHSE/RecycleHSE-iOS
 
 # API specification
 
