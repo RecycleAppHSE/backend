@@ -206,15 +206,15 @@ HTTP/1.1 200 OK
 </p>
 </details>
 
-<details><summary>NEWS</summary>
+<details><summary>TIPS</summary>
 <p>
-
-## Get news
+    
+## Get all tips collections
 
 Request example:
 
 ```
-GET /news?page=1&size=10
+GET /tip/collections
 
 USER_ID: 2123
 ```
@@ -225,43 +225,50 @@ Response example:
 HTTP/1.1 200 OK
 
 {
-  "news": [
-    {
-      "id": 12,
-      "title": "City pollution ranking",
-      "conent": "The polluted city is ...",
-      "source": "https://www.forbes.ru/newsroom/obshchestvo/393811-eksperty-nazvali-samye-zagryaznennye-goroda-rossii"
-    }
-  ]
+  "collections" : [ {
+    "id" : 1,
+    "title" : "Как утилизировать правильно?",
+    "tips_number" : 1
+  }, {
+    "id" : 2,
+    "title" : "Типы контейнеров",
+    "tips_number" : 0
+  }, {
+    "id" : 3,
+    "title" : "Правила сортировки",
+    "tips_number" : 0
+  }, {
+    "id" : 4,
+    "title" : "Правила сортировки (часть 2)",
+    "tips_number" : 0
+  } ]
 }
 ```
-
-## Add news to favourite
+ 
+## Get all tips by collection id
 
 Request example:
 
 ```
-POST /news/12/add_to_favourites
+GET /tip/1
 
 USER_ID: 2123
-
-{
-  "news_id" : 56
-}
 ```
 
 Response example:
 
 ```
 HTTP/1.1 200 OK
+
+{
+  "tips" : [ {
+    "id" : 1,
+    "collection_id" : 1,
+    "title" : "Раздельный сбор мусора: как правильно сортировать отходы для переработки?",
+    "content" : "Утилизация мусора – переработка отходов с целью ликвидации или повторного применения. Чтобы улучшить экологию в стране, необходимо правильно организовать использование отходов. Строгий контроль в сфере переработки отходов позволяет избавиться от большого скопления мусора. Важной задачей контролирующих служб является защита окружающей среды и здоровья населения.\n\nВыброс мусора на открытой не оборудованной территории категорически запрещён!\n\nРуководствуясь правилами сбора мусора, все отходы сортируются по классам, а затем утилизируются.\n\nПлощадки для складирования отходов должны быть закрыты от природных осадков и ветров. Контроль ведётся над выбросами вредных веществ в атмосферу. Не допускается попадание ядовитых веществ в подземные воды. "
+  } ]
+}
 ```
-
-</p>
-</details>
-
-<details><summary>ADVICES</summary>
-<p>
-  
 
 </p>
 </details>
