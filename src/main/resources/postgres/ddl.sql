@@ -82,3 +82,17 @@ create table correction_like
     constraint fk_correction_like_correction_id foreign key (correction_id) references correction (id),
     primary key (rc_user_id, correction_id)
 );
+
+create table if not exists tip_collection(
+    id bigserial primary key,
+    title text not null,
+    tips_number integer not null default 0
+);
+
+create table if not exists tip(
+    id bigserial primary key,
+    collection_id bigint not null references tip_collection,
+    title text not null,
+    content text,
+    picture bytea
+);
