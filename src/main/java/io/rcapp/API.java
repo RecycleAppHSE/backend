@@ -106,29 +106,27 @@ public class API {
   }
 
   public Single<JsonObject> getAllTipsCollections(RoutingContext routingContext, Long userId) {
-      return db.selectAllTipsCollections()
-              .map(JsonObject::mapFrom)
-              .toList()
-              .map(
-                      collections -> {
-                          final JsonArray arr = new JsonArray();
-                          collections.forEach(arr::add);
-                          return new JsonObject().put("collections", arr);
-                      }
-                  );
+    return db.selectAllTipsCollections()
+        .map(JsonObject::mapFrom)
+        .toList()
+        .map(
+            collections -> {
+              final JsonArray arr = new JsonArray();
+              collections.forEach(arr::add);
+              return new JsonObject().put("collections", arr);
+            });
   }
 
-    public Single<JsonObject> getAllTipsByCollection(RoutingContext routingContext, Long userId) {
-        final Long collectionId = Long.parseLong(routingContext.pathParam("collectionId"));
-        return db.selectAllTipsByCollection(collectionId)
-                .map(JsonObject::mapFrom)
-                .toList()
-                .map(
-                        tips -> {
-                            final JsonArray arr = new JsonArray();
-                            tips.forEach(arr::add);
-                            return new JsonObject().put("tips", arr);
-                        }
-                    );
-    }
+  public Single<JsonObject> getAllTipsByCollection(RoutingContext routingContext, Long userId) {
+    final Long collectionId = Long.parseLong(routingContext.pathParam("collectionId"));
+    return db.selectAllTipsByCollection(collectionId)
+        .map(JsonObject::mapFrom)
+        .toList()
+        .map(
+            tips -> {
+              final JsonArray arr = new JsonArray();
+              tips.forEach(arr::add);
+              return new JsonObject().put("tips", arr);
+            });
+  }
 }
