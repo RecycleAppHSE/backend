@@ -15,5 +15,4 @@ public record Point(
     @JsonProperty("works") String works,
     @JsonProperty("last_updated") Long lastUpdated,
     @JsonProperty("schedule") Schedule schedule,
-    @JsonProperty("corrections_count") Long correctionsCount
-) { }
+    @JsonProperty("corrections_count") Long correctionsCount) {}
