@@ -177,6 +177,26 @@ HTTP/1.1 200 OK
 }
 ```
 
+## Delete correction by id
+
+Request example:
+```
+DELETE /correction/1
+
+USER_ID: 2123
+```
+
+Response example:
+```
+HTTP/1.1 200 OK
+content-length: 39
+
+{
+  "message" : "Successfully deleted"
+}
+```
+
+
 ## Like/dislike correction
 
 Request example:

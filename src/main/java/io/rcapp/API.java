@@ -136,7 +136,7 @@ public class API {
         .map(
             res -> {
               if (res) {
-                return new JsonObject().put("message", "Successfully delete");
+                return new JsonObject().put("message", "Successfully deleted");
               } else {
                 return new JsonObject()
                     .put("message", "Correction was not deleted due to unmet conditions");
