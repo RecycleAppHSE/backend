@@ -288,6 +288,14 @@ public class DB {
         .map(DB::rowToTip);
   }
 
+  public Single<Boolean> deleteCorrectionBy(Long correctionId, Long userId) {
+    return pool.preparedQuery(
+            "delete from correction where id = $1 and rc_user_id = $2 and status <>"
+                + " 'applied'::CORRECTION_STATUS RETURNING id")
+        .rxExecute(Tuple.of(correctionId, userId))
+        .map(rs -> rs.iterator().hasNext());
+  }
+
   private Completable applyChangesIfNeeded(Transaction tx, long correctionId) {
     return tx.preparedQuery(
             """

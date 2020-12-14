@@ -129,4 +129,18 @@ public class API {
               return new JsonObject().put("tips", arr);
             });
   }
+
+  public Single<JsonObject> deleteCorrection(RoutingContext routingContext, Long userId) {
+    long correctionId = Long.parseLong(routingContext.pathParam("correctionId"));
+    return db.deleteCorrectionBy(correctionId, userId)
+        .map(
+            res -> {
+              if (res) {
+                return new JsonObject().put("message", "Successfully delete");
+              } else {
+                return new JsonObject()
+                    .put("message", "Correction was not deleted due to unmet conditions");
+              }
+            });
+  }
 }

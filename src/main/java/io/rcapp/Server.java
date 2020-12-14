@@ -57,7 +57,7 @@ public class Server {
     router.get("/search").handler(new Auth(api::search));
     router.post("/correction/suggest").handler(new Auth(api::suggest));
     router.get("/correction/:correctionId").handler(new Auth(api::correction));
-    //    router.delete("/correction/:correctionId").handler(new Auth(api::deleteCorrection));
+    router.delete("/correction/:correctionId").handler(new Auth(api::deleteCorrection));
     router.post("/correction/:correctionId/like").handler(new Auth(api::like));
     // tips
     router.get("/tip/collections").handler(new Auth(api::getAllTipsCollections));
