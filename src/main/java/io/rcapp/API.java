@@ -47,7 +47,8 @@ public class API {
   }
 
   public Single<JsonObject> search(RoutingContext routingContext, Long userId) {
-    return db.search(routingContext.request().getParam("q"))
+      String q = routingContext.request().getParam("q");
+      return db.search(q)
         .map(JsonObject::mapFrom)
         .toList()
         .map(

@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -259,10 +261,15 @@ public class DB {
   }
 
   private String pgsq(String query) {
-    Arrays.stream(query.replace(",", " ").split(" "))
-        .map(st -> st + ":*")
+    return Arrays.stream(query.replace(",", " ").split(" "))
+        .map(st -> {
+          if(NumberUtils.isCreatable(st)){
+            return st;
+          } else {
+            return st + ":*";
+          }
+        })
         .collect(Collectors.joining(" & "));
-    return query + ":*";
   }
 
   public Completable likeCorrection(long userId, long correctionId, long like) {
