@@ -18,6 +18,7 @@ import io.vertx.reactivex.sqlclient.RowSet;
 import io.vertx.reactivex.sqlclient.Transaction;
 import io.vertx.reactivex.sqlclient.Tuple;
 import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -242,17 +243,26 @@ public class DB {
   }
 
   public Flowable<Point> search(final String query) {
+    String pgsq = pgsq(query);
     return pool.preparedQuery(
             String.format(
                 """
                                 %s
                                 WHERE to_tsvector('english',address) @@ to_tsquery($1)
+                                ORDER BY address
                                 LIMIT 10
                                 """,
                 SELECT_POINT))
-        .rxExecute(Tuple.of(query + ":*"))
+        .rxExecute(Tuple.of(pgsq))
         .flatMapPublisher(Flowable::fromIterable)
         .map(DB::rowToPoint);
+  }
+
+  private String pgsq(String query) {
+    Arrays.stream(query.replace(",", " ").split(" "))
+        .map(st -> st + ":*")
+        .collect(Collectors.joining(" & "));
+    return query + ":*";
   }
 
   public Completable likeCorrection(long userId, long correctionId, long like) {
